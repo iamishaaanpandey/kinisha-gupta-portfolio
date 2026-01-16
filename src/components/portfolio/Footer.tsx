@@ -1,18 +1,55 @@
 import { motion, useInView } from "framer-motion";
 import { useRef, useState } from "react";
-import { Mail, Github, Linkedin, Send, Download, ArrowUpRight } from "lucide-react";
+import { Mail, Github, Linkedin, Send, Download, ArrowUpRight, CheckCircle, XCircle } from "lucide-react";
 
-// ⚠️ REPLACE WITH YOUR FORMSPREE ID
-const FORMSPREE_ID = "YOUR_FORM_ID_HERE"; 
-
+// ⚠️ YOUR FORMSPREE ID
+const FORMSPREE_ID = "mdaandzr1"; 
+  
 const Footer = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-50px" });
+  
+  // States for form handling
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submissionStatus, setSubmissionStatus] = useState<"idle" | "success" | "error">("idle");
+  const [errorMessage, setErrorMessage] = useState("");
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault(); // Stop default redirect
     setIsSubmitting(true);
-    // Formspree handles the rest via the action URL
+    setSubmissionStatus("idle");
+
+    const form = e.currentTarget;
+    const formData = new FormData(form);
+
+    try {
+      const response = await fetch(`https://formspree.io/f/${FORMSPREE_ID}`, {
+        method: "POST",
+        body: formData,
+        headers: {
+          'Accept': 'application/json'
+        }
+      });
+
+      if (response.ok) {
+        setSubmissionStatus("success");
+        form.reset(); // Clear form on success
+      } else {
+        const data = await response.json();
+        setSubmissionStatus("error");
+        // Try to get the specific error from Formspree, or fallback
+        if (data.errors) {
+          setErrorMessage(data.errors.map((err: any) => err.message).join(", "));
+        } else {
+          setErrorMessage("Oops! There was a problem submitting your form.");
+        }
+      }
+    } catch (error) {
+      setSubmissionStatus("error");
+      setErrorMessage("Network error. Please try again later.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const containerVariants = {
@@ -33,7 +70,7 @@ const Footer = () => {
         initial="hidden"
         animate={isInView ? "visible" : "hidden"}
       >
-        {/* --- HEADER (Updated Color Theme) --- */}
+        {/* --- HEADER --- */}
         <motion.div variants={itemVariants} className="mb-8">
           <h2 className="font-heading text-3xl md:text-4xl font-bold text-slate-900 dark:text-white mb-2">
             Let's <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-rose-600 dark:from-blue-400 dark:to-rose-400">Connect.</span>
@@ -47,12 +84,7 @@ const Footer = () => {
           
           {/* === LEFT: CONTACT FORM (3 Cols) === */}
           <motion.div variants={itemVariants} className="lg:col-span-3">
-            <form 
-              action={`https://formspree.io/f/${FORMSPREE_ID}`} 
-              method="POST"
-              onSubmit={handleSubmit}
-              className="space-y-4"
-            >
+            <form onSubmit={handleSubmit} className="space-y-4">
               <div className="grid md:grid-cols-2 gap-4">
                 <input 
                   type="text" 
@@ -77,14 +109,31 @@ const Footer = () => {
                 className="w-full px-4 py-3 rounded-lg bg-slate-50 dark:bg-[#0a0f1e] border border-slate-200 dark:border-slate-800 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none transition-all resize-none text-sm text-slate-900 dark:text-white"
               ></textarea>
               
-              <button 
-                type="submit" 
-                disabled={isSubmitting}
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-bold text-sm hover:opacity-90 transition-opacity disabled:opacity-50"
-              >
-                {isSubmitting ? "Sending..." : "Send Message"}
-                {!isSubmitting && <Send className="w-4 h-4" />}
-              </button>
+              <div className="flex items-center gap-4">
+                <button 
+                  type="submit" 
+                  disabled={isSubmitting}
+                  className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-bold text-sm hover:opacity-90 transition-opacity disabled:opacity-50"
+                >
+                  {isSubmitting ? "Sending..." : "Send Message"}
+                  {!isSubmitting && <Send className="w-4 h-4" />}
+                </button>
+
+                {/* --- STATUS MESSAGES --- */}
+                {submissionStatus === "success" && (
+                  <span className="flex items-center gap-2 text-sm font-bold text-emerald-600 dark:text-emerald-400 animate-in fade-in slide-in-from-left-2">
+                    <CheckCircle className="w-4 h-4" />
+                    Sent successfully!
+                  </span>
+                )}
+                
+                {submissionStatus === "error" && (
+                  <span className="flex items-center gap-2 text-sm font-bold text-rose-600 dark:text-rose-400 animate-in fade-in slide-in-from-left-2">
+                    <XCircle className="w-4 h-4" />
+                    Error: {errorMessage}
+                  </span>
+                )}
+              </div>
             </form>
           </motion.div>
 
@@ -103,7 +152,6 @@ const Footer = () => {
 
             {/* Socials & Resume Row */}
             <div className="grid grid-cols-2 gap-4">
-              {/* Socials */}
               <div className="flex flex-col gap-3">
                 <a 
                   href="https://linkedin.com/in/kinishagupta" 
@@ -125,7 +173,6 @@ const Footer = () => {
                 </a>
               </div>
 
-              {/* Resume Button */}
               <a 
                 href="/resume.pdf" 
                 download
