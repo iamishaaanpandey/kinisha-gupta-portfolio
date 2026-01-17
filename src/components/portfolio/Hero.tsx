@@ -1,6 +1,6 @@
 import { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
-import { ArrowRight, Download, Database, Activity, ShieldCheck } from "lucide-react";
+import { ArrowRight, Download, Database, Activity, ShieldCheck, Code2 } from "lucide-react"; // Added Code2 for LeetCode
 
 // --- ANIMATION VARIANTS ---
 const fadeLeft = {
@@ -78,17 +78,15 @@ const Hero = () => {
       
       {/* --- ALIVE AMBIENT ORBS (Breathing Animation) --- */}
       <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden">
-        {/* Top Right Blue Glow */}
         <motion.div 
           variants={pulse}
           animate="animate"
           className="absolute top-[-10%] right-[-5%] w-[40vw] h-[40vw] bg-blue-900/10 dark:bg-blue-900/20 rounded-full blur-[80px]"
         />
-        {/* Bottom Left Red Glow */}
         <motion.div 
           variants={pulse}
           animate="animate"
-          transition={{ delay: 4 }} // Offset breathing
+          transition={{ delay: 4 }} 
           className="absolute bottom-[-10%] left-[-10%] w-[35vw] h-[35vw] bg-rose-900/5 dark:bg-rose-900/10 rounded-full blur-[80px]"
         />
       </div>
@@ -113,10 +111,10 @@ const Hero = () => {
             </span>
           </motion.div>
 
-          {/* Headline (Smaller Mobile Fonts) */}
+          {/* Headline (Updated for Mobile Font Readability) */}
           <motion.h1 
             variants={fadeLeft}
-            className="font-heading text-3xl sm:text-4xl lg:text-6xl xl:text-7xl font-bold text-slate-900 dark:text-white mb-6 leading-[1.1] tracking-tight"
+            className="font-heading text-3xl sm:text-4xl lg:text-6xl xl:text-7xl font-bold text-slate-900 dark:text-white mb-6 leading-tight tracking-tight lg:leading-[1.1]"
           >
             Data Intelligence. <br />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-rose-600 dark:from-blue-500 dark:to-rose-500">
@@ -132,8 +130,10 @@ const Hero = () => {
             Bridging the gap between raw data and actionable insights. Building resource-efficient AI pipelines that drive decision-making.
           </motion.p>
 
-          {/* Buttons (Side-by-Side on Mobile, Centered on Mobile, Start on Desktop) */}
-          <motion.div variants={fadeLeft} className="flex flex-row gap-3 w-full justify-center lg:justify-start">
+          {/* Buttons & Links */}
+          <motion.div variants={fadeLeft} className="flex flex-wrap gap-3 w-full justify-center lg:justify-start">
+            
+            {/* View Work Button */}
             <button
               onClick={scrollToProjects}
               className="group relative inline-flex items-center justify-center gap-2 px-5 py-3 md:px-6 md:py-3.5 flex-1 sm:flex-none text-sm font-bold text-white bg-blue-700 dark:bg-blue-600 rounded-xl hover:bg-blue-800 dark:hover:bg-blue-500 transition-all shadow-lg shadow-blue-900/20 overflow-hidden font-sans whitespace-nowrap"
@@ -145,6 +145,7 @@ const Hero = () => {
               </span>
             </button>
 
+            {/* Resume Button */}
             <a
               href="/resume.pdf"
               download
@@ -153,10 +154,22 @@ const Hero = () => {
               <Download className="w-4 h-4 group-hover:scale-110 transition-transform" />
               Resume
             </a>
+
+            {/* LeetCode Button (New) */}
+            <a
+              href="https://leetcode.com/u/kinishagupta/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group inline-flex items-center justify-center gap-2 px-5 py-3 md:px-6 md:py-3.5 flex-1 sm:flex-none text-sm font-bold text-slate-700 dark:text-slate-200 bg-white/50 dark:bg-slate-900/50 backdrop-blur-md border border-slate-200 dark:border-slate-800 rounded-xl hover:bg-white dark:hover:bg-slate-800 transition-all font-sans whitespace-nowrap"
+            >
+              <Code2 className="w-4 h-4 text-[#ffa116]" /> {/* LeetCode Orange Color */}
+              LeetCode
+            </a>
+
           </motion.div>
         </motion.div>
 
-        {/* === RIGHT COLUMN: VISUAL (Unchanged) === */}
+        {/* === RIGHT COLUMN: VISUAL === */}
         <motion.div 
           initial="hidden"
           animate="visible"
@@ -237,7 +250,7 @@ const Hero = () => {
             </div>
           </motion.div>
 
-          {/* Floating Icons (Parallax Enhanced) */}
+          {/* Floating Icons */}
           <motion.div 
             style={{ y: useTransform(scrollYProgress, [0, 1], [0, -40]) }}
             animate={{ y: [0, 10, 0] }}
@@ -258,7 +271,7 @@ const Hero = () => {
         </motion.div>
       </div>
 
-      {/* --- SCROLL INDICATOR (Hidden on Mobile to save space) --- */}
+      {/* --- SCROLL INDICATOR --- */}
       <motion.div 
         style={{ opacity: opacityScroll }}
         className="absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 pointer-events-none hidden md:flex"

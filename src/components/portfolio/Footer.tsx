@@ -1,10 +1,10 @@
 import { motion, useInView } from "framer-motion";
 import { useRef, useState } from "react";
-import { Mail, Github, Linkedin, Send, Download, ArrowUpRight, CheckCircle, XCircle } from "lucide-react";
+import { Mail, Github, Linkedin, Send, Download, ArrowUpRight, CheckCircle, XCircle, Code2 } from "lucide-react";
 
 // ⚠️ YOUR FORMSPREE ID
 const FORMSPREE_ID = "mdaandzr1"; 
-  
+
 const Footer = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-50px" });
@@ -37,7 +37,6 @@ const Footer = () => {
       } else {
         const data = await response.json();
         setSubmissionStatus("error");
-        // Try to get the specific error from Formspree, or fallback
         if (data.errors) {
           setErrorMessage(data.errors.map((err: any) => err.message).join(", "));
         } else {
@@ -150,37 +149,49 @@ const Footer = () => {
               </a>
             </div>
 
-            {/* Socials & Resume Row */}
-            <div className="grid grid-cols-2 gap-4">
-              <div className="flex flex-col gap-3">
-                <a 
-                  href="https://linkedin.com/in/kinishagupta" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-3 p-3 rounded-lg border border-slate-200 dark:border-slate-800 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
-                >
-                  <Linkedin className="w-5 h-5 text-[#0077b5]" />
-                  <span className="text-sm font-semibold text-slate-700 dark:text-slate-300">LinkedIn</span>
-                </a>
-                <a 
-                  href="https://github.com/kinishagupta" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-3 p-3 rounded-lg border border-slate-200 dark:border-slate-800 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
-                >
-                  <Github className="w-5 h-5 text-slate-700 dark:text-white" />
-                  <span className="text-sm font-semibold text-slate-700 dark:text-slate-300">GitHub</span>
-                </a>
-              </div>
+            {/* Socials & Resume Grid (2x2 Layout) */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              
+              <a 
+                href="https://linkedin.com/in/kinishagupta" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="flex items-center gap-3 p-3 rounded-lg border border-slate-200 dark:border-slate-800 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors group"
+              >
+                <Linkedin className="w-5 h-5 text-[#0077b5] group-hover:scale-110 transition-transform" />
+                <span className="text-sm font-semibold text-slate-700 dark:text-slate-300">LinkedIn</span>
+              </a>
 
+              <a 
+                href="https://github.com/kinishagupta" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="flex items-center gap-3 p-3 rounded-lg border border-slate-200 dark:border-slate-800 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors group"
+              >
+                <Github className="w-5 h-5 text-slate-700 dark:text-white group-hover:scale-110 transition-transform" />
+                <span className="text-sm font-semibold text-slate-700 dark:text-slate-300">GitHub</span>
+              </a>
+
+              <a 
+                href="https://leetcode.com/u/kinishagupta/" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="flex items-center gap-3 p-3 rounded-lg border border-slate-200 dark:border-slate-800 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors group"
+              >
+                <Code2 className="w-5 h-5 text-[#ffa116] group-hover:scale-110 transition-transform" />
+                <span className="text-sm font-semibold text-slate-700 dark:text-slate-300">LeetCode</span>
+              </a>
+
+              {/* Resume Button - Styled to match grid but stand out */}
               <a 
                 href="/resume.pdf" 
                 download
-                className="flex flex-col items-center justify-center gap-2 p-3 rounded-xl bg-blue-600 text-white hover:bg-blue-700 transition-colors text-center"
+                className="flex items-center gap-3 p-3 rounded-lg bg-blue-600 hover:bg-blue-700 transition-colors text-white group"
               >
-                <Download className="w-5 h-5" />
+                <Download className="w-5 h-5 group-hover:scale-110 transition-transform" />
                 <span className="text-sm font-bold">Download CV</span>
               </a>
+
             </div>
 
           </motion.div>

@@ -39,13 +39,16 @@ const Navbar = () => {
         initial={{ y: -100 }}
         animate={{ y: 0 }}
         transition={{ duration: 0.6, ease: "easeOut" }}
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-          scrolled 
-            ? "bg-white/90 dark:bg-[#020410]/90 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 shadow-sm" 
+        className={`fixed top-0 left-0 right-0 z-[100] transition-all duration-300 ${
+          // If menu is open, force solid background. If scrolled, use glass. Else transparent.
+          isOpen
+            ? "bg-white dark:bg-[#020410] border-b border-transparent"
+            : scrolled
+            ? "bg-white/90 dark:bg-[#020410]/90 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 shadow-sm"
             : "bg-transparent py-4"
         }`}
       >
-        <div className="container mx-auto px-6 md:px-12 h-16 md:h-20 flex items-center justify-between relative z-50">
+        <div className="container mx-auto px-6 md:px-12 h-16 md:h-20 flex items-center justify-between relative z-[101]">
           
           {/* --- LOGO --- */}
           <a href="#" className="relative group flex-shrink-0" onClick={() => setIsOpen(false)}>
@@ -87,7 +90,7 @@ const Navbar = () => {
             {/* Mobile Menu Button */}
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className="md:hidden p-2 text-slate-900 dark:text-white focus:outline-none z-50"
+              className="md:hidden p-2 text-slate-900 dark:text-white focus:outline-none z-[101]"
               aria-label="Toggle menu"
             >
               <AnimatePresence mode="wait">
@@ -123,7 +126,7 @@ const Navbar = () => {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -20 }}
               transition={{ duration: 0.3, ease: "easeInOut" }}
-              className="fixed inset-0 z-40 bg-white dark:bg-[#020410] flex flex-col items-center justify-center"
+              className="fixed inset-0 z-[99] bg-white dark:bg-[#020410] flex flex-col items-center justify-center h-[100dvh] w-screen"
             >
               <div className="flex flex-col items-center gap-8 w-full px-6">
                 {navLinks.map((link, idx) => (
@@ -134,7 +137,7 @@ const Navbar = () => {
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.1 + (idx * 0.1) }}
-                    className="font-sans text-2xl font-bold text-slate-800 dark:text-slate-200 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+                    className="font-heading text-3xl font-bold text-slate-800 dark:text-slate-200 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
                   >
                     {link.label}
                   </motion.a>
