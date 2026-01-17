@@ -130,13 +130,16 @@ const Hero = () => {
             Bridging the gap between raw data and actionable insights. Building resource-efficient AI pipelines that drive decision-making.
           </motion.p>
 
-          {/* Buttons & Links */}
-          <motion.div variants={fadeLeft} className="flex flex-wrap gap-3 w-full justify-center lg:justify-start">
+          {/* Buttons & Links (Mobile Overflow Fixed) */}
+          <motion.div 
+            variants={fadeLeft} 
+            className="flex flex-wrap items-center justify-center lg:justify-start gap-3 w-full"
+          >
             
             {/* View Work Button */}
             <button
               onClick={scrollToProjects}
-              className="group relative inline-flex items-center justify-center gap-2 px-5 py-3 md:px-6 md:py-3.5 flex-1 sm:flex-none text-sm font-bold text-white bg-blue-700 dark:bg-blue-600 rounded-xl hover:bg-blue-800 dark:hover:bg-blue-500 transition-all shadow-lg shadow-blue-900/20 overflow-hidden font-sans whitespace-nowrap"
+              className="group relative inline-flex items-center justify-center gap-2 px-5 py-3 flex-grow sm:flex-grow-0 text-sm font-bold text-white bg-blue-700 dark:bg-blue-600 rounded-xl hover:bg-blue-800 dark:hover:bg-blue-500 transition-all shadow-lg shadow-blue-900/20 overflow-hidden font-sans whitespace-nowrap min-w-[140px]"
             >
               <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
               <span className="relative flex items-center gap-2">
@@ -149,20 +152,20 @@ const Hero = () => {
             <a
               href="/resume.pdf"
               download
-              className="group inline-flex items-center justify-center gap-2 px-5 py-3 md:px-6 md:py-3.5 flex-1 sm:flex-none text-sm font-bold text-slate-700 dark:text-slate-200 bg-white/50 dark:bg-slate-900/50 backdrop-blur-md border border-slate-200 dark:border-slate-800 rounded-xl hover:bg-white dark:hover:bg-slate-800 transition-all font-sans whitespace-nowrap"
+              className="group inline-flex items-center justify-center gap-2 px-5 py-3 flex-grow sm:flex-grow-0 text-sm font-bold text-slate-700 dark:text-slate-200 bg-white/50 dark:bg-slate-900/50 backdrop-blur-md border border-slate-200 dark:border-slate-800 rounded-xl hover:bg-white dark:hover:bg-slate-800 transition-all font-sans whitespace-nowrap min-w-[120px]"
             >
               <Download className="w-4 h-4 group-hover:scale-110 transition-transform" />
               Resume
             </a>
 
-            {/* LeetCode Button (New) */}
+            {/* LeetCode Button */}
             <a
               href="https://leetcode.com/u/kinishagupta/"
               target="_blank"
               rel="noopener noreferrer"
-              className="group inline-flex items-center justify-center gap-2 px-5 py-3 md:px-6 md:py-3.5 flex-1 sm:flex-none text-sm font-bold text-slate-700 dark:text-slate-200 bg-white/50 dark:bg-slate-900/50 backdrop-blur-md border border-slate-200 dark:border-slate-800 rounded-xl hover:bg-white dark:hover:bg-slate-800 transition-all font-sans whitespace-nowrap"
+              className="group inline-flex items-center justify-center gap-2 px-5 py-3 flex-grow sm:flex-grow-0 text-sm font-bold text-slate-700 dark:text-slate-200 bg-white/50 dark:bg-slate-900/50 backdrop-blur-md border border-slate-200 dark:border-slate-800 rounded-xl hover:bg-white dark:hover:bg-slate-800 transition-all font-sans whitespace-nowrap min-w-[130px]"
             >
-              <Code2 className="w-4 h-4 text-[#ffa116]" /> {/* LeetCode Orange Color */}
+              <Code2 className="w-4 h-4 text-[#ffa116]" />
               LeetCode
             </a>
 
@@ -290,4 +293,4 @@ const Hero = () => {
 };
 
 export default Hero;
-            
+        
