@@ -1,6 +1,6 @@
 import { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
-import { ArrowRight, Download, Database, Activity, ShieldCheck, Code2 } from "lucide-react"; // Added Code2 for LeetCode
+import { ArrowRight, Download, Database, Activity, ShieldCheck, Code2 } from "lucide-react";
 
 // --- ANIMATION VARIANTS ---
 const fadeLeft = {
@@ -290,3 +290,4 @@ const Hero = () => {
 };
 
 export default Hero;
+            
