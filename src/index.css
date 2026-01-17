@@ -1,5 +1,5 @@
-/* 1. Import Fonts */
-@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Nunito:wght@300;400;500;600;700&family=Playfair+Display:wght@400;600;700;800&display=swap');
+/* 1. Import Fonts (Removed Nunito, kept Playfair for Desktop Headings) */
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Playfair+Display:wght@400;600;700;800&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -29,8 +29,11 @@
     --ring: 221 83% 53%;
     --radius: 0.75rem;
 
-    /* --- Define Fonts Here for Global Usage --- */
-    --font-sans: 'Nunito', sans-serif;
+    /* --- FONT STRATEGY UPDATED --- */
+    /* Mobile/Body: Switched from Nunito (Round) to Helvetica (Serious/Square) */
+    --font-sans: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    
+    /* Desktop Headings: Kept Playfair (Elegant Serif) */
     --font-heading: 'Playfair Display', serif;
   }
 
@@ -61,11 +64,9 @@
 @layer base {
   * {
     @apply border-border;
-    /* FIX: Removes ugly blue tap highlight on mobile */
     -webkit-tap-highlight-color: transparent; 
   }
   
-  /* FIX: Forces mobile browsers to respect your button styling (removes 3D gloss) */
   button, input, textarea, select {
     -webkit-appearance: none;
     -moz-appearance: none;
@@ -79,9 +80,7 @@
 
   body {
     @apply bg-background text-foreground font-sans antialiased;
-    letter-spacing: -0.01em;
-    
-    /* FIX: Makes fonts crisp on high-res mobile screens */
+    letter-spacing: -0.01em; /* Tighter letter spacing for serious look */
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
@@ -89,14 +88,14 @@
   }
 
   /* --- GLOBAL HEADING STRATEGY --- */
-  /* Mobile First: Use Clean Sans-Serif (Nunito) for readability */
+  /* Mobile: Uses Helvetica (Serious/Clean) */
   h1, h2, h3, h4, h5, h6 {
-    font-family: var(--font-sans);
+    font-family: var(--font-sans); 
     font-weight: 700;
-    letter-spacing: -0.02em;
+    letter-spacing: -0.03em; /* Tight spacing looks more professional */
   }
 
-  /* Desktop (md+): Switch to Fancy Serif (Playfair Display) */
+  /* Desktop: Uses Playfair (Editorial/Elegant) */
   @media (min-width: 768px) {
     h1, h2, h3, h4, h5, h6 {
       font-family: var(--font-heading);
@@ -106,18 +105,17 @@
 
 @layer components {
   /* --- CLASS OVERRIDE STRATEGY --- */
-  /* This ensures that any manual usage of className="font-heading" follows the rules */
   .font-heading {
-    font-family: var(--font-sans) !important; /* Force Mobile Sans */
+    font-family: var(--font-sans) !important;
   }
 
   @media (min-width: 768px) {
     .font-heading {
-      font-family: var(--font-heading) !important; /* Force Desktop Serif */
+      font-family: var(--font-heading) !important;
     }
   }
 
-  /* --- Existing Component Classes --- */
+  /* --- Components --- */
   .section-padding {
     @apply px-6 md:px-12 lg:px-24 py-20 md:py-32;
   }
@@ -151,4 +149,4 @@
     background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
   }
     }
-      
+    
