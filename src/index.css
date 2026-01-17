@@ -7,7 +7,7 @@
 
 @layer base {
   :root {
-    /* Light Mode Variables */
+    /* --- Light Mode Variables --- */
     --background: 210 40% 98%;
     --foreground: 222 47% 11%;
     --card: 0 0% 100%;
@@ -28,10 +28,14 @@
     --input: 214.3 31.8% 91.4%;
     --ring: 221 83% 53%;
     --radius: 0.75rem;
+
+    /* --- Define Fonts Here for Global Usage --- */
+    --font-sans: 'Nunito', sans-serif;
+    --font-heading: 'Playfair Display', serif;
   }
 
   .dark {
-    /* Dark Mode: Midnight Velvet */
+    /* --- Dark Mode Variables (Midnight Velvet) --- */
     --background: 230 35% 7%;
     --foreground: 210 40% 98%;
     --card: 230 35% 10%;
@@ -61,7 +65,7 @@
     -webkit-tap-highlight-color: transparent; 
   }
   
-  /* FIX: Forces mobile browsers to respect your button styling */
+  /* FIX: Forces mobile browsers to respect your button styling (removes 3D gloss) */
   button, input, textarea, select {
     -webkit-appearance: none;
     -moz-appearance: none;
@@ -77,20 +81,43 @@
     @apply bg-background text-foreground font-sans antialiased;
     letter-spacing: -0.01em;
     
-    /* FIX: Makes fonts crisp and prevents zooming */
+    /* FIX: Makes fonts crisp on high-res mobile screens */
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
     -webkit-text-size-adjust: 100%;
   }
 
+  /* --- GLOBAL HEADING STRATEGY --- */
+  /* Mobile First: Use Clean Sans-Serif (Nunito) for readability */
   h1, h2, h3, h4, h5, h6 {
-    @apply font-heading font-bold;
-    letter-spacing: -0.02em; 
+    font-family: var(--font-sans);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+
+  /* Desktop (md+): Switch to Fancy Serif (Playfair Display) */
+  @media (min-width: 768px) {
+    h1, h2, h3, h4, h5, h6 {
+      font-family: var(--font-heading);
+    }
   }
 }
 
 @layer components {
+  /* --- CLASS OVERRIDE STRATEGY --- */
+  /* This ensures that any manual usage of className="font-heading" follows the rules */
+  .font-heading {
+    font-family: var(--font-sans) !important; /* Force Mobile Sans */
+  }
+
+  @media (min-width: 768px) {
+    .font-heading {
+      font-family: var(--font-heading) !important; /* Force Desktop Serif */
+    }
+  }
+
+  /* --- Existing Component Classes --- */
   .section-padding {
     @apply px-6 md:px-12 lg:px-24 py-20 md:py-32;
   }
@@ -123,5 +150,5 @@
     @apply fixed inset-0 w-full h-full opacity-[0.03] pointer-events-none z-0 mix-blend-overlay;
     background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
   }
-  }
-    
+    }
+      
